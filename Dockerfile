@@ -14,7 +14,6 @@ RUN apk add --no-cache \
             curl \
             git \
             openssl \
-            zsh \
             tree \
             vim \
             jq \
