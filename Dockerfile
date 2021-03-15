@@ -42,22 +42,11 @@ RUN helm nexus-push --help
 RUN ark get kubectl
 RUN ark get kubectx
 RUN ark get doctl
-RUN ark get k9s
-RUN ark get popeye
 RUN ark get krew
 RUN ark get linkerd2
 RUN krew install ns
 RUN krew install ctx
 RUN krew install cert-manager
-RUN krew install popeye
-RUN krew install starboard
-RUN krew install view-utilization
-RUN krew install bd-xray
-RUN krew install status
-RUN krew install topology
-RUN krew install janitor
-RUN krew install graph
-RUN krew install flame
 RUN git clone https://github.com/andrey-pohilko/registry-cli.git
 RUN pip3 install -r registry-cli/requirements-build.txt
 
