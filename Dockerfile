@@ -13,16 +13,16 @@ RUN apk add --no-cache \
             py3-pip \
             curl \
             git \
-            openssl \
-            tree \
-            vim \
-            jq \
+            # openssl \
+            # tree \
+            # vim \
+            # jq \
             wget \
             bash \
             util-linux \
             && pip3 install --upgrade pip \
-            && pip3 install \
-            awscli \
+            # && pip3 install \
+            # awscli \
             && rm -rf /var/cache/apk/* 
 
 RUN bash
@@ -45,7 +45,7 @@ RUN ark get krew
 RUN ark get linkerd2
 RUN krew install ns
 RUN krew install ctx
-RUN krew install cert-manager
+# RUN krew install cert-manager
 RUN git clone https://github.com/andrey-pohilko/registry-cli.git
 RUN pip3 install -r registry-cli/requirements-build.txt
 
