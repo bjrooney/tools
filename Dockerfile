@@ -13,6 +13,7 @@ RUN apk add --no-cache \
             py3-pip \
             curl \
             git \
+            ncurses \
             # openssl \
             # tree \
             # vim \
@@ -53,4 +54,3 @@ RUN python3 /root/registry-cli/registry.py || :
  
 RUN rm -rf /tmp/*
 CMD ["sleep", "infinity"]
-
