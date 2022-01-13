@@ -21,8 +21,11 @@ RUN apk add --no-cache \
             wget \
             bash \
             util-linux \
-            && pip3 install --upgrade pip \
             awscli \
+            node \
+            && pip3 install --upgrade pip \
+            && pip3 install boto3 \
+            && npm install -g aws-azure-login \
             && rm -rf /var/cache/apk/* 
 
 RUN bash
@@ -55,6 +58,7 @@ RUN krew install topology
 RUN krew install janitor
 RUN krew install graph
 RUN krew install flame
+RUN krew install popeye
 
 RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gimlet-$(uname)-$(uname -m) -o gimlet
 RUN chmod +x gimlet
