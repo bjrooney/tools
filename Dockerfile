@@ -14,16 +14,15 @@ RUN apk add --no-cache \
             curl \
             git \
             ncurses \
-            # openssl \
-            # tree \
-            # vim \
-            # jq \
+            openssl \
+            tree \
+            vim \
+            jq \
             wget \
             bash \
             util-linux \
             && pip3 install --upgrade pip \
-            # && pip3 install \
-            # awscli \
+            awscli \
             && rm -rf /var/cache/apk/* 
 
 RUN bash
