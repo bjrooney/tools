@@ -8,7 +8,7 @@ FROM alpine:latest
 
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 
-RUN apk add --no-cache \
+RUN apk add --update --no-cache \
             python3 \
             py3-pip \
             curl \
@@ -22,7 +22,7 @@ RUN apk add --no-cache \
             bash \
             util-linux \
             nodejs \
-            nodejs-npm \
+            npm \
             && pip3 install --upgrade     pip \
             && pip3 install --no-cache-dir boto3 \
             && pip3 install --no-cache-dir awscli \
