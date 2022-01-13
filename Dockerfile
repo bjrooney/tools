@@ -21,10 +21,11 @@ RUN apk add --no-cache \
             wget \
             bash \
             util-linux \
-            awscli \
-            node \
-            && pip3 install --upgrade pip \
-            && pip3 install boto3 \
+            nodejs \
+            nodejs-npm \
+            && pip3 install --upgrade     pip \
+            && pip3 install --no-cache-dir boto3 \
+            && pip3 install --no-cache-dir awscli \
             && npm install -g aws-azure-login \
             && rm -rf /var/cache/apk/* 
 
