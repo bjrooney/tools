@@ -33,7 +33,6 @@ RUN apk add --update --no-cache \
             ttf-dejavu \
             xfce4 \
             faenza-icon-theme \
-            chromium \
             gnome-terminal
 
 
