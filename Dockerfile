@@ -6,8 +6,11 @@
 
 FROM alpine:latest 
 
-ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
+ENV DISPLAY 5900
+# alternative 1024x768x16
+ENV RESOLUTION 1920x1080x24
 
+ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 RUN apk add --update --no-cache \
             python3 \
             py3-pip \
@@ -23,7 +26,17 @@ RUN apk add --update --no-cache \
             util-linux \
             nodejs \
             npm \
-            && pip3 install --upgrade     pip \
+            sed \
+            firefox \
+            x11vnc \
+            xvfb \
+            ttf-dejavu \
+            xfce4 \
+            faenza-icon-theme 
+
+
+
+ RUN        pip3 install --upgrade     pip \
             && pip3 install --no-cache-dir boto3 \
             && pip3 install --no-cache-dir awscli \
             && npm install -g aws-azure-login \
@@ -59,17 +72,28 @@ RUN krew install topology
 RUN krew install janitor
 RUN krew install graph
 RUN krew install flame
-RUN krew install popeye
+RUN krew install popeye 
 
-RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gimlet-$(uname)-$(uname -m) -o gimlet
-RUN chmod +x gimlet
-RUN mv ./gimlet /usr/local/bin/gimlet
-RUN gimlet --version
+RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gimlet-$(uname)-$(uname -m) -o gimlet \
+&& chmod +x gimlet \
+&& mv ./gimlet /usr/local/bin/gimlet \
+&& gimlet --version
 
-RUN git clone https://github.com/andrey-pohilko/registry-cli.git
-RUN pip3 install -r registry-cli/requirements-build.txt
-
-RUN python3 /root/registry-cli/registry.py || :
+RUN git clone https://github.com/andrey-pohilko/registry-cli.git \
+&& pip3 install -r registry-cli/requirements-build.txt \
+&& python3 /root/registry-cli/registry.py || :
  
 RUN rm -rf /tmp/*
-CMD ["sleep", "infinity"]
+RUN mkdir ~/.vnc
+RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
+# setup supervisor
+COPY supervisor /tmp
+SHELL ["/bin/bash", "-c"]
+RUN apk add --no-cache supervisor && \
+  echo_supervisord_conf > /etc/supervisord.conf && \
+  sed -i -r -f /tmp/supervisor.sed /etc/supervisord.conf && \
+  mkdir -pv /etc/supervisor/conf.d /var/log/{x11vnc,xfce4,xvfb} && \
+  mv /tmp/supervisor-*.ini /etc/supervisor/conf.d/ && \
+  rm -fr /tmp/supervisor*
+
+CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
