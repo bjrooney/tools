@@ -32,7 +32,11 @@ RUN apk add --update --no-cache \
             xvfb \
             ttf-dejavu \
             xfce4 \
-            faenza-icon-theme 
+            faenza-icon-theme \
+            chromium \
+            gnome-terminal
+
+
 
 # setup novnc (requires bash)
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
