@@ -11,6 +11,11 @@ ENV DISPLAY :1
 ENV RESOLUTION 1920x1080x24
 
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin:/root/.nvm
+RUN touch /root/.bashrc
+RUN touch /root/.bash_profile
+RUN touch /root/.zshrc
+RUN touch /root/.profile
+
 WORKDIR /root
 RUN apk add --update --no-cache \
             supervisor \
@@ -25,7 +30,6 @@ RUN apk add --update --no-cache \
             vim \
             jq \
             wget \
-            bash \
             util-linux \
             sed \
             x11vnc \
@@ -42,19 +46,14 @@ RUN apk add --update --no-cache \
             ttf-dejavu \
             ffmpeg-libs \
             curl
-
+SHELL       ["/bin/bash", "-c"]
 RUN         pip3 install --no-cache-dir awscli 
 RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
-RUN         sh
+
 RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 #            && nvm install --lts
 # RUN        npm install -g aws-azure-login \
 #           && rm -rf /var/cache/apk/* 
-
-
-
-
-
 
 RUN curl -sLS https://dl.get-arkade.dev | sh
 RUN arkade --help
@@ -96,7 +95,7 @@ RUN adduser -D -s /bin/bash -h /home/vncuser vncuser
 
 # setup supervisor
 COPY supervisor /tmp
-SHELL ["/bin/bash", "-c"]
+
 RUN echo_supervisord_conf > /etc/supervisord.conf && \
   sed -i -r -f /tmp/supervisor.sed /etc/supervisord.conf && \
   mkdir -pv /etc/supervisor/conf.d /var/log/{novnc,x11vnc,xfce4,xvfb} && \
