@@ -46,10 +46,10 @@ RUN apk add --update --no-cache \
 RUN         pip3 install --no-cache-dir awscli 
 RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
 RUN         sh
-RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-           && nvm install --lts
-RUN        npm install -g aws-azure-login \
-          && rm -rf /var/cache/apk/* 
+RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+#            && nvm install --lts
+# RUN        npm install -g aws-azure-login \
+#           && rm -rf /var/cache/apk/* 
 
 
 
