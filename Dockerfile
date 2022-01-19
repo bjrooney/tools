@@ -14,8 +14,6 @@ ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 RUN apk add --update --no-cache \
             supervisor \
             chromium \
-            python3 \
-            py3-pip \
             curl \
             git \
             ncurses \
@@ -26,8 +24,6 @@ RUN apk add --update --no-cache \
             wget \
             bash \
             util-linux \
-            nodejs \
-            npm \
             sed \
             x11vnc \
             xvfb \
@@ -41,7 +37,10 @@ RUN apk add --update --no-cache \
             desktop-file-utils \
             adwaita-icon-theme \
             ttf-dejavu \
-            ffmpeg-libs
+            ffmpeg-libs \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+            --upgrade nodejs npm  python3 py3-pip 
 
 RUN         pip3 install --no-cache-dir awscli 
 RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium \
