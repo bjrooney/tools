@@ -4,7 +4,7 @@
 # We don't recommend using it: If you want to develop in docker, please use `make docker_build`
 # instead.
 
-FROM alpine:3.11
+FROM alpine:latest 
 
 ENV DISPLAY :1
 # alternative 1024x768x16
@@ -13,7 +13,7 @@ ENV RESOLUTION 1920x1080x24
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 RUN apk add --update --no-cache \
             supervisor \
-            chromium\
+            chromium=81.0.4044.113-r0 \
             python3 \
             py3-pip \
             curl \
@@ -42,10 +42,11 @@ RUN apk add --update --no-cache \
             desktop-file-utils \
             adwaita-icon-theme \
             ttf-dejavu \
-            ffmpeg-libs \
-           && rm -rf /var/cache/apk/*
+            ffmpeg-libs
+
 RUN         pip3 install --no-cache-dir awscli \
-            && npm install -g aws-azure-login 
+            && npm install -g aws-azure-login \
+            && rm -rf /var/cache/apk/* 
 
 RUN bash
 
