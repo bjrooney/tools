@@ -43,7 +43,6 @@ RUN apk add --update --no-cache \
             adwaita-icon-theme \
             ttf-dejavu \
             ffmpeg-libs \
-            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing novncinstall \
            && rm -rf /var/cache/apk/*
 RUN         pip3 install --no-cache-dir awscli \
             && npm install -g aws-azure-login 
