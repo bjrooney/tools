@@ -46,7 +46,7 @@ RUN apk add --update --no-cache \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing novncinstall \
            && rm -rf /var/cache/apk/*
 RUN         pip3 install --no-cache-dir awscli \
-            && npm install -g aws-azure-login \
+            && npm install -g aws-azure-login 
 
 RUN bash
 
