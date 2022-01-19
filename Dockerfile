@@ -11,6 +11,7 @@ ENV DISPLAY :1
 ENV RESOLUTION 1920x1080x24
 
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
+WORKDIR /root
 RUN apk add --update --no-cache \
             supervisor \
             chromium \
@@ -26,8 +27,6 @@ RUN apk add --update --no-cache \
             wget \
             bash \
             util-linux \
-            nodejs \
-            npm \
             sed \
             x11vnc \
             xvfb \
@@ -41,16 +40,22 @@ RUN apk add --update --no-cache \
             desktop-file-utils \
             adwaita-icon-theme \
             ttf-dejavu \
-            ffmpeg-libs
+            ffmpeg-libs \
+            curl
 
 RUN         pip3 install --no-cache-dir awscli 
-RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium \
-            && npm install -g aws-azure-login \
-            && rm -rf /var/cache/apk/* 
+RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
+RUN         sh
+RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+           export NVM_DIR="$HOME/.nvm" \
+           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm \
+           nvm install --lts
+RUN        npm install -g aws-azure-login \
+          && rm -rf /var/cache/apk/* 
 
-RUN bash
 
-WORKDIR /root
+
+
 
 
 RUN curl -sLS https://dl.get-arkade.dev | sh
@@ -102,7 +107,7 @@ RUN echo_supervisord_conf > /etc/supervisord.conf && \
 RUN chmod -Rf 777 /etc/supervisor/conf.d/ 
 RUN chmod 777 /etc/supervisord.conf
 RUN chmod -Rf 777 /var/log
-USER vncuser
-WORKDIR /home/vncuser
+# USER vncuser
+# WORKDIR /home/vncuser
 
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
