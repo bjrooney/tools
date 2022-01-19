@@ -4,7 +4,7 @@
 # We don't recommend using it: If you want to develop in docker, please use `make docker_build`
 # instead.
 
-FROM alpine:latest 
+FROM alpine:3.11
 
 ENV DISPLAY :1
 # alternative 1024x768x16
@@ -13,7 +13,7 @@ ENV RESOLUTION 1920x1080x24
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 RUN apk add --update --no-cache \
             supervisor \
-            chromium=81.0.4044.113-r0 \
+            chromium \
             python3 \
             py3-pip \
             curl \
@@ -29,7 +29,6 @@ RUN apk add --update --no-cache \
             nodejs \
             npm \
             sed \
-            firefox \
             x11vnc \
             xvfb \
             ttf-dejavu \
