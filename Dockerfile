@@ -4,7 +4,7 @@
 # We don't recommend using it: If you want to develop in docker, please use `make docker_build`
 # instead.
 
-FROM alpine:latest 
+FROM alpine:3.11
 
 ENV DISPLAY :1
 # alternative 1024x768x16
@@ -13,7 +13,7 @@ ENV RESOLUTION 1920x1080x24
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 RUN apk add --update --no-cache \
             supervisor \
-            chromium=93.0.4577.82-r2 \
+            chromium\
             python3 \
             py3-pip \
             curl \
@@ -39,8 +39,12 @@ RUN apk add --update --no-cache \
             xterm \
             bash \
             zsh \
-            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing novncinstall
-
+            desktop-file-utils \
+            adwaita-icon-theme \
+            ttf-dejavu \
+            ffmpeg-libs \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing novncinstall \
+           && rm -rf /var/cache/apk/*
 RUN         pip3 install --no-cache-dir awscli \
             && npm install -g aws-azure-login \
 
@@ -84,16 +88,6 @@ RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gim
 RUN git clone https://github.com/andrey-pohilko/registry-cli.git \
 && pip3 install -r registry-cli/requirements-build.txt \
 && python3 /root/registry-cli/registry.py || :
-
-RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-            --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
-            chromium \
-            desktop-file-utils \
-            adwaita-icon-theme \
-            ttf-dejavu \
-            ffmpeg-libs \
-            && rm -rf /var/cache/apk/*
-
  
 RUN adduser -D -s /bin/bash -h /home/vncuser vncuser
 
