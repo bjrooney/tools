@@ -43,8 +43,7 @@ RUN apk add --update --no-cache \
             ttf-dejavu \
             ffmpeg-libs
 
-RUN         python3 -m pip install --upgrade pip \
-            pip3 install --no-cache-dir awscli 
+RUN         pip3 install --no-cache-dir awscli 
 RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium \
             && npm install -g aws-azure-login \
             && rm -rf /var/cache/apk/* 
