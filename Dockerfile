@@ -12,6 +12,8 @@ ENV RESOLUTION 1920x1080x24
 
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
 RUN apk add --update --no-cache \
+            supervisor \
+            chromium=93.0.4577.82-r2 \
             python3 \
             py3-pip \
             curl \
@@ -33,21 +35,14 @@ RUN apk add --update --no-cache \
             ttf-dejavu \
             xfce4 \
             faenza-icon-theme \
-            gnome-terminal
+            gnome-terminal \
+            xterm \
+            bash \
+            zsh \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing novncinstall
 
-
-
-# setup novnc (requires bash)
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-  bash \
-  novnc && \
-  ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html
-
-RUN        pip3 install --upgrade     pip \
-            && pip3 install --no-cache-dir boto3 \
-            && pip3 install --no-cache-dir awscli \
+RUN         pip3 install --no-cache-dir awscli \
             && npm install -g aws-azure-login \
-            && rm -rf /var/cache/apk/* 
 
 RUN bash
 
@@ -89,18 +84,31 @@ RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gim
 RUN git clone https://github.com/andrey-pohilko/registry-cli.git \
 && pip3 install -r registry-cli/requirements-build.txt \
 && python3 /root/registry-cli/registry.py || :
+
+RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+            --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+            chromium \
+            desktop-file-utils \
+            adwaita-icon-theme \
+            ttf-dejavu \
+            ffmpeg-libs \
+            && rm -rf /var/cache/apk/*
+
  
-RUN rm -rf /tmp/*
-RUN mkdir ~/.vnc
-RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
+RUN adduser -D -s /bin/bash -h /home/vncuser vncuser
+
 # setup supervisor
 COPY supervisor /tmp
 SHELL ["/bin/bash", "-c"]
-RUN apk add --no-cache supervisor && \
-  echo_supervisord_conf > /etc/supervisord.conf && \
+RUN echo_supervisord_conf > /etc/supervisord.conf && \
   sed -i -r -f /tmp/supervisor.sed /etc/supervisord.conf && \
   mkdir -pv /etc/supervisor/conf.d /var/log/{novnc,x11vnc,xfce4,xvfb} && \
   mv /tmp/supervisor-*.ini /etc/supervisor/conf.d/ && \
   rm -fr /tmp/supervisor*
+RUN chmod -Rf 777 /etc/supervisor/conf.d/ 
+RUN chmod 777 /etc/supervisord.conf
+RUN chmod -Rf 777 /var/log
+USER vncuser
+WORKDIR /home/vncuser
 
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
