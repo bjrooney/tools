@@ -4,7 +4,7 @@
 # We don't recommend using it: If you want to develop in docker, please use `make docker_build`
 # instead.
 
-FROM alpine:3.11
+FROM alpine:latest
 
 ENV DISPLAY :1
 # alternative 1024x768x16
@@ -19,7 +19,7 @@ RUN touch /root/.profile
 WORKDIR /root
 RUN apk add --update --no-cache \
             supervisor \
-            chromium \
+            firefox\
             python3 \
             py3-pip \
             curl \
@@ -48,11 +48,11 @@ RUN apk add --update --no-cache \
             curl
 SHELL       ["/bin/bash", "-c"]
 RUN         pip3 install --no-cache-dir awscli 
-RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
+# RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
 
-RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+# RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 #            && nvm install --lts
-# RUN        npm install -g aws-azure-login \
+RUN        npm install -g aws-azure-login
 #           && rm -rf /var/cache/apk/* 
 
 RUN curl -sLS https://dl.get-arkade.dev | sh
