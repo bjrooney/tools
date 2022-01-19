@@ -10,7 +10,7 @@ ENV DISPLAY :1
 # alternative 1024x768x16
 ENV RESOLUTION 1920x1080x24
 
-ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin
+ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin:/root/.nvm
 WORKDIR /root
 RUN apk add --update --no-cache \
             supervisor \
@@ -47,8 +47,6 @@ RUN         pip3 install --no-cache-dir awscli
 RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
 RUN         sh
 RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-           && export NVM_DIR="$HOME/.nvm" \
-           && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm \
            && nvm install --lts
 RUN        npm install -g aws-azure-login \
           && rm -rf /var/cache/apk/* 
