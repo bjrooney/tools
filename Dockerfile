@@ -19,6 +19,7 @@ RUN touch /root/.profile
 WORKDIR /root
 RUN apk add --update --no-cache \
             supervisor \
+            telnet \
             firefox\
             python3 \
             py3-pip \
