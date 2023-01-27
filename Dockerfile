@@ -84,6 +84,7 @@ RUN krew install janitor
 RUN krew install graph
 RUN krew install flame
 RUN krew install popeye 
+RUN krew install kc
 
 RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gimlet-$(uname)-$(uname -m) -o gimlet \
 && chmod +x gimlet \
