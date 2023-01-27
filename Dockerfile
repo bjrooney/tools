@@ -86,14 +86,22 @@ RUN krew install flame
 RUN krew install popeye 
 RUN krew install kc
 
-RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-415.0.0-linux-x86_64.tar.gz
+RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
+&& tar zxvf google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
+&& cd google-cloud-sdk \
+&& chmod +x install.sh \
+&& /bin/sh install.sh -q \
+&& cd - \
+&& rm -rf google-cloud* google-cloud-sdk
 
-RUN tar zxvf google-cloud-cli-415.0.0-linux-x86_64.tar.gz
-RUN rm google-cloud-cli-415.0.0-linux-x86_64.tar.gz
-RUN cd google-cloud-sdk/
-RUN sh install.sh -q
-RUN sh cd -
-
+RUN curl -L https://github.com/cli/cli/releases/download/v2.22.0/gh_2.22.0_linux_amd64.tar.gz -o gh.tar.gz \
+&& tar zxvf gh.tar.gz \
+&& cd gh_2.22.0_linux_amd64/bin \
+&& chmod +x gh \
+&& mv ./gh /usr/local/bin/ \
+&& gh --version \
+&& cd - \
+&& rm -rf gh *
 
 RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gimlet-$(uname)-$(uname -m) -o gimlet \
 && chmod +x gimlet \
