@@ -86,6 +86,15 @@ RUN krew install flame
 RUN krew install popeye 
 RUN krew install kc
 
+RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-415.0.0-linux-x86_64.tar.gz
+
+RUN tar zxvf google-cloud-cli-415.0.0-linux-x86_64.tar.gz
+RUN rm google-cloud-cli-415.0.0-linux-x86_64.tar.gz
+RUN cd google-cloud-sdk/
+RUN sh install.sh -q
+RUN sh cd -
+
+
 RUN curl -L https://github.com/gimlet-io/gimlet-cli/releases/download/v0.3.0/gimlet-$(uname)-$(uname -m) -o gimlet \
 && chmod +x gimlet \
 && mv ./gimlet /usr/local/bin/gimlet \
