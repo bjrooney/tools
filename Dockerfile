@@ -49,9 +49,17 @@ RUN apk add --update --no-cache \
             nodejs \
             npm \   
             gcc \
-            build-base
+            bash coreutils curl file g++ grep git libc6-compat make ruby ruby-bigdecimal ruby-etc ruby-irb ruby-json ruby-test-unit
 # Install homebrew
-RUN         "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" \
+	&& HOMEBREW_NO_ANALYTICS=1 brew install -s patchelf \
+	&& HOMEBREW_NO_ANALYTICS=1 brew install --ignore-dependencies binutils gmp isl@0.18 libmpc linux-headers mpfr zlib \
+	&& (HOMEBREW_NO_ANALYTICS=1 brew install --ignore-dependencies gcc || true) \
+	&& HOMEBREW_NO_ANALYTICS=1 brew install glibc \
+	&& HOMEBREW_NO_ANALYTICS=1 brew postinstall gcc \
+	&& HOMEBREW_NO_ANALYTICS=1 brew remove patchelf \
+	&& HOMEBREW_NO_ANALYTICS=1 brew install -s patchelf \
+	&& HOMEBREW_NO_ANALYTICS=1 brew config
 
 SHELL       ["/bin/bash", "-c"]
 
