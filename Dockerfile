@@ -50,7 +50,7 @@ RUN apk add --update --no-cache \
             npm
 
 # Install homebrew
-RUN         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+RUN         "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 SHELL       ["/bin/bash", "-c"]
 
