@@ -47,7 +47,7 @@ RUN apk add --update --no-cache \
             ffmpeg-libs \
             curl \
             nodejs \
-            npm\  
+            npm \   
             gcc \
             build-essential procps  file 
 # Install homebrew
