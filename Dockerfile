@@ -23,8 +23,6 @@ RUN apk add --update --no-cache \
             firefox\
             python3 \
             py3-pip \
-            curl \
-            git \
             ncurses \
             openssl \
             tree \
@@ -49,7 +47,7 @@ RUN apk add --update --no-cache \
             nodejs \
             npm \   
             gcc \
-            bash coreutils curl file g++ grep git libc6-compat make ruby ruby-bigdecimal ruby-etc ruby-irb ruby-json ruby-test-unit
+            coreutils curl file g++ grep git libc6-compat make ruby ruby-bigdecimal ruby-etc ruby-irb ruby-json ruby-test-unit
 # Install homebrew
 RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" \
 	&& HOMEBREW_NO_ANALYTICS=1 brew install -s patchelf \
