@@ -30,7 +30,6 @@ RUN apk add --update --no-cache \
             tree \
             vim \
             jq \
-            wget \
             util-linux \
             sed \
             x11vnc \
@@ -49,7 +48,14 @@ RUN apk add --update --no-cache \
             curl \
             nodejs \
             npm
+
+# Install homebrew
+RUN         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 SHELL       ["/bin/bash", "-c"]
+
+RUN brew install wget
+
 RUN         pip3 install --no-cache-dir awscli 
 # RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
 
