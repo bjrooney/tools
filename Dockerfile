@@ -49,7 +49,7 @@ RUN apk add --update --no-cache \
             nodejs \
             npm \   
             gcc \
-            build-essential procps  file 
+            build-base
 # Install homebrew
 RUN         "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
