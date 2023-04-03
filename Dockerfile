@@ -1,4 +1,4 @@
-# docker build -t doctl_local --build-arg DOCTL_VERSION=1.23.1 .
+# docker build -t doctl_local --build-arg DOCTL_VERSION=1.93.1 .
 #
 # This Dockerfile exists so casual uses of `docker build` and `docker run` do something sane.
 # We don't recommend using it: If you want to develop in docker, please use `make docker_build`
@@ -46,20 +46,15 @@ RUN apk add --update --no-cache \
             curl \
             nodejs \
             npm \
-            gcc
+            gcc \
+            git
 SHELL       ["/bin/bash", "-c"]
 
-RUN brew install wget
 
-RUN         pip3 install --no-cache-dir awscli 
-# RUN         mkdir -p /usr/lib/node_modules/aws-azure-login/node_modules/puppeteer/.local-chromium 
+RUN         pip3 install --no-cache-dir awscli
 
-# RUN        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-#            && nvm install --lts
-RUN        npm install -g aws-azure-login
-RUN        rm -rf /var/cache/apk/* 
 
-RUN curl -sLS https://dl.get-arkade.dev | sh
+RUN curl -sLS https://get.arkade.dev | sh
 RUN arkade --help
 RUN ark --help  # a handy alias
 
@@ -69,13 +64,12 @@ RUN helm nexus-push --help
 
 RUN ark get kubectl
 RUN ark get kubectx
-RUN ark get doctl
 RUN ark get krew
 RUN ark get linkerd2
 RUN krew install ns
 RUN krew install ctx
 RUN krew install cert-manager
-RUN krew install popeye
+# RUN krew install popeye
 RUN krew install starboard
 RUN krew install view-utilization
 RUN krew install bd-xray
@@ -84,7 +78,7 @@ RUN krew install topology
 RUN krew install janitor
 RUN krew install graph
 RUN krew install flame
-RUN krew install popeye 
+# RUN krew install popeye 
 RUN krew install kc
 
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
