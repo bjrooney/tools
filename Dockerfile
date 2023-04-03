@@ -45,17 +45,8 @@ RUN apk add --update --no-cache \
             ffmpeg-libs \
             curl \
             nodejs \
-<<<<<<< HEAD
             npm \
-            gcc 
-=======
-            npm \   
-            gcc \
-            build-essential procps  file 
-# Install homebrew
-RUN         "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
->>>>>>> parent of c243294 (build base ffs)
+            gcc
 SHELL       ["/bin/bash", "-c"]
 
 RUN brew install wget
