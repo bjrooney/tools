@@ -16,6 +16,7 @@ RUN touch /root/.bash_profile
 RUN touch /root/.zshrc
 RUN touch /root/.profile
 
+
 WORKDIR /root
 RUN apk add --update --no-cache \
             supervisor \
@@ -80,6 +81,7 @@ RUN krew install graph
 RUN krew install flame
 # RUN krew install popeye 
 RUN krew install kc
+
 
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
 && tar zxvf google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
