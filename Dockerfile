@@ -48,12 +48,10 @@ RUN apk add --update --no-cache \
             nodejs \
             npm \
             gcc \
-            git
+            git \
+            aws-cli
+            
 SHELL       ["/bin/bash", "-c"]
-
-
-RUN         pip3 install --no-cache-dir awscli
-
 
 RUN curl -sLS https://get.arkade.dev | sh
 RUN arkade --help
