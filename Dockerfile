@@ -60,8 +60,7 @@ RUN apk add --update --no-cache \
             nodejs \
             npm \
             gcc \
-            git \
-            aws-cli
+            git 
 
 SHELL       ["/bin/bash", "-c"]
 
@@ -97,10 +96,10 @@ RUN cd "$(mktemp -d)" \
     && mv bin/linux_amd64/kubelogin /usr/bin/kubelogin
 
 # Install powershell
-# RUN cd "$(mktemp -d)" \
-#     wget https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-x64.tar.gz \
-#     tar zxvf powershell-${PWSH_VERSION}-linux-x64.tar.gz -C /usr/bin \
-#     chmod +x /usr/bin/pwsh 
+RUN cd "$(mktemp -d)" \
+    && wget "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-x64.tar.gz" \
+    && tar zxvf powershell-${PWSH_VERSION}-linux-x64.tar.gz -C /usr/bin \
+    && chmod +x /usr/bin/pwsh 
 
 # Install terraform
 RUN cd "$(mktemp -d)" \
