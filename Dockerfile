@@ -64,11 +64,11 @@ RUN apk add --update --no-cache \
 
 SHELL       ["/bin/bash", "-c"]
 
-
-SHELL ["/bin/bash", "-xeo", "pipefail", "-c"]
-# DL4006 - Set the SHELL option -o pipefail before RUN with a pipe in
-# Since there are some shells that do not accept the -o pipefail option, it is not enough to add set -o pipefail inside the RUN instruction.
-# https://emmer.dev/blog/reducing-docker-layers/
+# Install powershell
+RUN cd "$(mktemp -d)" \
+    && wget "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-x64.tar.gz" \
+    && tar zxvf powershell-${PWSH_VERSION}-linux-x64.tar.gz -C /bin \
+    && chmod +x /bin/pwsh 
 
 # Install helm
 RUN cd "$(mktemp -d)" \
@@ -95,11 +95,7 @@ RUN cd "$(mktemp -d)" \
     && unzip kubelogin-linux-amd64.zip \
     && mv bin/linux_amd64/kubelogin /usr/bin/kubelogin
 
-# Install powershell
-RUN cd "$(mktemp -d)" \
-    && wget "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-x64.tar.gz" \
-    && tar zxvf powershell-${PWSH_VERSION}-linux-x64.tar.gz -C /usr/bin \
-    && chmod +x /usr/bin/pwsh 
+
 
 # Install terraform
 RUN cd "$(mktemp -d)" \
