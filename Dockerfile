@@ -21,7 +21,7 @@ ENV PWSH_VERSION=7.4.1
 ENV TERRASPACE_VERSION=latest
 ENV AZCLI_VERSION=2.65.0
 ENV K9S_VERSION=0.32.5
-
+ENV GH_VERSION=2.58.0
 ENV PATH=${PATH}:/root/.krew/bin:/root/.arkade/bin:/root/.linkerd2/bin:/root/.nvm
 RUN touch /root/.bashrc
 RUN touch /root/.bash_profile
@@ -145,9 +145,9 @@ RUN cd "$(mktemp -d)" \
   # && gcloud --version
 
 RUN cd "$(mktemp -d)" \
-  && curl -L https://github.com/cli/cli/releases/download/v2.22.0/gh_2.22.0_linux_amd64.tar.gz -o gh.tar.gz \
+  && curl -L https://github.com/cli/cli/releases/download/v$(GH_VERSION)/gh_$(GH_VERSION)_linux_amd64.tar.gz -o gh.tar.gz \
   && tar zxvf gh.tar.gz \
-  && cd gh_2.22.0_linux_amd64/bin \
+  && cd gh_$(GH_VERSION)_linux_amd64/bin \
   && chmod +x gh \
   && mv ./gh /usr/local/bin/ \
   && gh --version 
