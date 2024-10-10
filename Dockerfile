@@ -137,8 +137,8 @@ RUN cd "$(mktemp -d)" \
     && ./aws/install
 
 RUN cd "$(mktemp -d)" \
-  && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
-  && tar zxvf google-cloud-cli-415.0.0-linux-x86_64.tar.gz \
+  && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86.tar.gz  \
+  && tar zxvf google-cloud-cli-linux-x86.tar.gz \
   && cd google-cloud-sdk \
   && chmod +x install.sh \
   && /bin/sh install.sh -q  
